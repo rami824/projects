@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TunStage.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="EntrepriseSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Designation" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Specialite" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Adresse" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Tel" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UsersId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PostulationSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Presentation" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Telephone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UsersId" Type="int" Nullable="false" />
+    <Property Name="StagesId" Type="int" Nullable="false" />
+    <Property Name="etat" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Adresse" Type="nchar" MaxLength="50" />
+    <Property Name="Niveau" Type="nchar" MaxLength="50" />
+    <Property Name="Specialite" Type="nchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="StagesSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Titre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Lieu" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Duree" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UsersId" Type="int" Nullable="false" />
+    <Property Name="EntrepriseId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsersSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Prenom" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Sexe" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Role" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_EntrepriseStages">
+    <End Role="EntrepriseSet" Type="Self.EntrepriseSet" Multiplicity="1" />
+    <End Role="StagesSet" Type="Self.StagesSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EntrepriseSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StagesSet">
+        <PropertyRef Name="EntrepriseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StagesPostulation">
+    <End Role="StagesSet" Type="Self.StagesSet" Multiplicity="1" />
+    <End Role="PostulationSet" Type="Self.PostulationSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StagesSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PostulationSet">
+        <PropertyRef Name="StagesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersEntreprise">
+    <End Role="UsersSet" Type="Self.UsersSet" Multiplicity="1" />
+    <End Role="EntrepriseSet" Type="Self.EntrepriseSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UsersSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EntrepriseSet">
+        <PropertyRef Name="UsersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersPostulation">
+    <End Role="UsersSet" Type="Self.UsersSet" Multiplicity="1" />
+    <End Role="PostulationSet" Type="Self.PostulationSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UsersSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PostulationSet">
+        <PropertyRef Name="UsersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersStages">
+    <End Role="UsersSet" Type="Self.UsersSet" Multiplicity="1" />
+    <End Role="StagesSet" Type="Self.StagesSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UsersSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StagesSet">
+        <PropertyRef Name="UsersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TunStageStoreContainer">
+    <EntitySet Name="EntrepriseSet" EntityType="Self.EntrepriseSet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PostulationSet" EntityType="Self.PostulationSet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StagesSet" EntityType="Self.StagesSet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsersSet" EntityType="Self.UsersSet" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_EntrepriseStages" Association="Self.FK_EntrepriseStages">
+      <End Role="EntrepriseSet" EntitySet="EntrepriseSet" />
+      <End Role="StagesSet" EntitySet="StagesSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StagesPostulation" Association="Self.FK_StagesPostulation">
+      <End Role="StagesSet" EntitySet="StagesSet" />
+      <End Role="PostulationSet" EntitySet="PostulationSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersEntreprise" Association="Self.FK_UsersEntreprise">
+      <End Role="UsersSet" EntitySet="UsersSet" />
+      <End Role="EntrepriseSet" EntitySet="EntrepriseSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersPostulation" Association="Self.FK_UsersPostulation">
+      <End Role="UsersSet" EntitySet="UsersSet" />
+      <End Role="PostulationSet" EntitySet="PostulationSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersStages" Association="Self.FK_UsersStages">
+      <End Role="UsersSet" EntitySet="UsersSet" />
+      <End Role="StagesSet" EntitySet="StagesSet" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,139 @@
+﻿@model IEnumerable<SimpleMemberShip.Models.Stages>
+
+@{
+    List<SelectListItem> types = new List<SelectListItem>()
+    {
+         new SelectListItem()
+         {
+             Text ="Administration Réseau",
+             Value ="Administration Réseau"
+         },
+          new SelectListItem()
+         {
+             Text ="Administration Système",
+             Value ="Administration Système"
+         },
+         new SelectListItem()
+         {
+             Text ="Developpement Desktop",
+             Value ="Developpement Desktop"
+         },
+          new SelectListItem()
+         {
+             Text ="Developpement Web",
+             Value ="Developpement Web"
+         },
+         new SelectListItem()
+         {
+             Text ="Developpement Mobile",
+             Value ="Developpement Mobile"
+         }
+    };
+    ViewBag.Title = "Create";
+}
+<div class="jumbotron">
+    <h4>Resultat de recherche</h4>
+
+    <p>
+        @using (Html.BeginForm())
+        {
+            <table>
+                <tr>
+                    <td>Chercher un stage : </td>
+                    <td><input type="text" class="col-lg-5 form-control" id="mot" name="mot" placeholder="Titre de stage" /></td>
+                    <td><input type="submit" value="Chercher" class="btn btn-primary" /></td>
+                </tr>
+                <tr>
+                    <td>Categorie : </td>
+                    <td>@Html.DropDownList("types", @types, "", new { @class = "form-control" })</td>
+                    <td></td>
+                </tr>
+            </table>
+
+        }
+    </p>
+    <div class="CSSTableGenerator">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Titre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Lieu)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Duree)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.Users.Username)
+                </th>*@
+                <th>
+                   Entreprise
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Titre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Lieu)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Duree)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Users.Username)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Entreprise.Designation)
+                    </td>
+                    <td>
+                        @*@{if (User.IsInRole("recruteur"))
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+
+                        }
+                        }
+
+
+                        |*@
+                        @{if (User.IsInRole("recruteur") || User.IsInRole("admin") || User.IsInRole("etudiant"))
+                        {
+                            @Html.ActionLink("Details", "Details", new { id = item.Id })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Details", "../Account/Login")
+                        }}
+                       @* |
+                        @{if (User.IsInRole("recruteur") || User.IsInRole("admin"))
+                        {
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+
+                        }
+                        }*@
+
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+</div>
+    </div>

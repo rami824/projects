@@ -1,0 +1,113 @@
+﻿@model IEnumerable<SimpleMemberShip.Models.Stages>
+
+@{
+    List<SelectListItem> types = new List<SelectListItem>()
+    {
+         new SelectListItem()
+         {
+             Text ="Administration Réseau",
+             Value ="Administration Réseau"
+         },
+          new SelectListItem()
+         {
+             Text ="Administration Système",
+             Value ="Administration Système"
+         },
+         new SelectListItem()
+         {
+             Text ="Developpement Desktop",
+             Value ="Developpement Desktop"
+         },
+          new SelectListItem()
+         {
+             Text ="Developpement Web",
+             Value ="Developpement Web"
+         },
+         new SelectListItem()
+         {
+             Text ="Developpement Mobile",
+             Value ="Developpement Mobile"
+         }
+    };
+    ViewBag.Title = "Create";
+}
+<div class="jumbotron">
+    <h2>Les Stages</h2>
+
+    @{if (User.IsInRole("recruteur"))
+    {
+          <form action="Stages/Create">
+        <button type="submit" class="btn btn-success"><b>+ </b>Ajouter</button>
+    </form>
+
+    }}
+@{if (User.IsInRole("etudiant"))
+    {<br /><br />
+    <form action="~/Stages/Recherche" method="post">
+        
+            <table>
+                <tr>
+                    <td>Chercher un stage : </td>
+                    <td><input type="text" class="col-lg-5 form-control" id="mot" name="mot" placeholder="Titre de stage"></td>
+                    <td><input type="submit" value="Chercher" class="btn btn-primary" /></td>
+                </tr>
+                <tr>
+                    <td>Categorie : </td>
+                    <td>@Html.DropDownList("types", @types, "", new { @class = "form-control" })</td>
+                    <td></td>
+                </tr>
+            </table>
+    </form>
+}}
+    <br /><br />
+    <div class="CSSTableGenerator">
+        <table>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Titre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Lieu)
+                </th>
+                <th>
+                    Entreprise
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Titre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Lieu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Entreprise.Designation)
+                    </td>
+                    <td>
+                        @{if (User.IsInRole("recruteur"))
+                        {
+                            @Html.ActionLink("Editer", "Edit", new { id = item.Id })
+
+                        }
+                        }
+
+
+                        | @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @{if (User.IsInRole("recruteur") || User.IsInRole("admin"))
+                        {
+                            @Html.ActionLink("Supprimer", "Delete", new { id = item.Id })
+
+                        }
+                        }
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

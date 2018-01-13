@@ -1,0 +1,103 @@
+﻿@model IEnumerable<SimpleMemberShip.Models.Stages>
+
+@{
+    ViewBag.Title = "Recherche";
+}
+<div class="jumbotron">
+
+    <h2></h2>
+
+
+    <p>
+        @using (Html.BeginForm())
+        {
+            <table>
+                <tr>
+                    <td>Stage : </td>
+                    <td>@Html.TextBox("mot")</td>
+                    <td><input type="submit" value="Chercher" class="btn btn-default" /></td>
+                </tr>
+            </table>
+
+        }
+    </p>
+    <div class="CSSTableGenerator">
+        <table>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Titre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Lieu)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Duree)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th>
+                    Proprietaire
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Entreprise.Designation)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Titre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Lieu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Duree)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Users.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Entreprise.Designation)
+                    </td>
+                    <td>
+                        @*@{if (User.IsInRole("recruteur"))
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+
+                        }
+                        }*@
+
+
+                        |
+                        @{if (User.IsInRole("recruteur") || User.IsInRole("admin") || User.IsInRole("etudiant"))
+                        {
+                            @Html.ActionLink("Details", "~/Account/Login", new { id = item.Id })
+                        }}
+                        |
+                        @*@{if (User.IsInRole("recruteur") || User.IsInRole("admin"))
+                        {
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+
+                        }
+                        }*@
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+        </div>
+    </div>

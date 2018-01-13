@@ -1,0 +1,26 @@
+﻿@model SimpleMemberShip.Models.UsersSet
+
+@{
+    ViewBag.Title = "login";
+}
+
+<div class="form-horizontal">
+    <br />
+    <center> <h2>Page de Connexion</h2></center>
+    <div data-add-back-btn="true">
+        @using (@Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+            <label> Entrer votre Login: </label>
+            @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+            <label> Entrer votre Mot de Passe: </label>
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            <br />
+            <button class="btn btn-primary">Connexion</button><br /><br />
+
+
+        }
+    </div>
+</div>
+

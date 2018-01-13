@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="engine1/style.css" />
+    <link href="~/Content/tableau.css" rel="stylesheet" />
+    <script type="text/javascript" src="engine1/jquery.js"></script>
+    <title>@ViewBag.Title - Tuni-Randon </title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <b> @Html.ActionLink("Tuni-Randonné", "Index", "Home", null, new { @class = "navbar-brand" }) </b>
+            </div>
+
+            
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    @*<li>@Html.ActionLink("Accueil", "Index", "Home")</li>*@
+                    @{
+                        if (User.Identity.Name.Equals("admin"))
+                        {
+                            <li>@Html.ActionLink("Les Utilisateurs", "index", "Users")</li>
+                            <li>@Html.ActionLink("Les Evennements", "index", "Evennement")</li>  
+                            <li>@Html.ActionLink("Les Cartes", "index", "Carte")</li>
+                       
+                        }
+                        if (User.Identity.Name.Equals("organisateur"))
+        {
+                            <li>@Html.ActionLink("Les Evennements", "index", "Evennement")</li>  
+                            <li>@Html.ActionLink("Les Cartes", "index", "Carte")</li>
+                        
+        }
+                        if (User.Identity.Name.Equals("chercheur"))
+        {
+                            <li>@Html.ActionLink("Les Evennements", "index", "Evennement")</li>  
+                            <li>@Html.ActionLink("Les Cartes", "index", "Carte")</li> 
+        
+        }
+                        
+                    }
+                  <li>@Html.ActionLink("Se Localiser", "Contact", "Home")</li>
+                    
+
+                          <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Historique<b class="caret"></b></a>
+                              <ul class="dropdown-menu">
+                              
+                                  <li>@Html.ActionLink("Item 1", "Index", "Home")</li>
+                                  <li>@Html.ActionLink("Item 2", "Index", "Home")</li>
+                              </ul>
+
+                          </li>
+                    
+                    @{
+                        if (User.Identity.IsAuthenticated)
+                        {        
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                @Html.ActionLink("Bienvenu " + User.Identity.Name, "index", "Home")</li>
+                            <li>@Html.ActionLink("Se déconnecter", "Logout", "Account")</li>
+                        </ul>
+                        }
+                        else
+                        {
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>@Html.ActionLink("Se connecter", "login", "Users")</li>
+                                <li>@Html.ActionLink("Ouvrir un Compte", "Create", "Users")</li>
+                            </ul>
+                        }
+                     }
+
+                    
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <center><p>&copy; @DateTime.Now.Year - Tuni-Randonné</p></center>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

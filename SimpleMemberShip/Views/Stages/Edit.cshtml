@@ -1,0 +1,182 @@
+﻿@model SimpleMemberShip.Models.Stages
+
+@{
+    List<SelectListItem> types = new List<SelectListItem>()
+    {
+         new SelectListItem()
+         {
+             Text ="Administration Réseau",
+             Value ="Administration Réseau"
+         },
+          new SelectListItem()
+         {
+             Text ="Administration Système",
+             Value ="Administration Système"
+         },
+         new SelectListItem()
+         {
+             Text ="Developpement Desktop",
+             Value ="Developpement Desktop"
+         },
+          new SelectListItem()
+         {
+             Text ="Developpement Web",
+             Value ="Developpement Web"
+         },
+         new SelectListItem()
+         {
+             Text ="Developpement Mobile",
+             Value ="Developpement Mobile"
+         }
+    };
+    List<SelectListItem> duree = new List<SelectListItem>()
+    {
+         new SelectListItem()
+         {
+             Text ="1 mois",
+             Value ="1 mois"
+         },
+          new SelectListItem()
+         {
+             Text ="2 mois",
+             Value ="2 mois"
+         },
+         new SelectListItem()
+         {
+             Text ="3 mois",
+             Value ="3 mois"
+         },
+          new SelectListItem()
+         {
+             Text ="4 mois",
+             Value ="4 mois"
+         },
+         new SelectListItem()
+         {
+             Text ="5 mois",
+             Value ="5 mois"
+         },
+          new SelectListItem()
+         {
+             Text ="6 mois",
+             Value ="6 mois"
+         },
+          new SelectListItem()
+         {
+             Text ="7 mois",
+             Value ="7 mois"
+         },
+         new SelectListItem()
+         {
+             Text ="8 mois",
+             Value ="8 mois"
+         },
+          new SelectListItem()
+         {
+             Text ="9 mois",
+             Value ="9 mois"
+         },
+          new SelectListItem()
+         {
+             Text ="10 mois",
+             Value ="10 mois"
+         },
+          new SelectListItem()
+         {
+             Text ="11 mois",
+             Value ="11 mois"
+         },
+         new SelectListItem()
+         {
+             Text ="12 mois",
+             Value ="12 mois"
+         },
+          new SelectListItem()
+         {
+             Text ="Plus d'un ans",
+             Value ="Plus d'un ans"
+         }
+    };
+    ViewBag.Title = "Edit";
+}
+<div class="jumbotron">
+    <h2>Editer</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+          
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Titre, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Titre, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Titre)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Lieu, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Lieu, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Lieu)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Duree, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Duree, @duree, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Duree)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Type, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Type, @types, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Type)
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                @Html.LabelFor(model => model.UsersId, "UsersId", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("UsersId", String.Empty)
+                    @Html.ValidationMessageFor(model => model.UsersId)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EntrepriseId, "EntrepriseId", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("EntrepriseId", String.Empty)
+                    @Html.ValidationMessageFor(model => model.EntrepriseId)
+                </div>
+            </div>*@
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Confirmer" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Retour", "Index")
+    </div>
+</div>

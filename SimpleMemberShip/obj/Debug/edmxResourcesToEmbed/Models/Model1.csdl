@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="EvennementSet" EntityType="Model1.EvennementSet" />
+    <EntitySet Name="UsersSet" EntityType="Model1.UsersSet" />
+    <AssociationSet Name="FK_UsersEvennement" Association="Model1.FK_UsersEvennement">
+      <End Role="UsersSet" EntitySet="UsersSet" />
+      <End Role="EvennementSet" EntitySet="EvennementSet" />
+    </AssociationSet>
+    <EntitySet Name="CarteSet" EntityType="Model1.CarteSet" />
+    <AssociationSet Name="FK_UsersCarte" Association="Model1.FK_UsersCarte">
+      <End Role="UsersSet" EntitySet="UsersSet" />
+      <End Role="CarteSet" EntitySet="CarteSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="EvennementSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Titre" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Place" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UsersId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="UsersSet" Relationship="Model1.FK_UsersEvennement" FromRole="EvennementSet" ToRole="UsersSet" />
+  </EntityType>
+  <EntityType Name="UsersSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Nom" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Prenom" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Adresse" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Role" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Tel" Type="Int32" Nullable="false" />
+    <Property Name="Sexe" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="EvennementSet" Relationship="Model1.FK_UsersEvennement" FromRole="UsersSet" ToRole="EvennementSet" />
+    <NavigationProperty Name="CarteSet" Relationship="Model1.FK_UsersCarte" FromRole="UsersSet" ToRole="CarteSet" />
+  </EntityType>
+  <Association Name="FK_UsersEvennement">
+    <End Type="Model1.UsersSet" Role="UsersSet" Multiplicity="1" />
+    <End Type="Model1.EvennementSet" Role="EvennementSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UsersSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EvennementSet">
+        <PropertyRef Name="UsersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CarteSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Designation" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Path" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="UsersId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="UsersSet" Relationship="Model1.FK_UsersCarte" FromRole="CarteSet" ToRole="UsersSet" />
+  </EntityType>
+  <Association Name="FK_UsersCarte">
+    <End Type="Model1.UsersSet" Role="UsersSet" Multiplicity="1" />
+    <End Type="Model1.CarteSet" Role="CarteSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UsersSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CarteSet">
+        <PropertyRef Name="UsersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

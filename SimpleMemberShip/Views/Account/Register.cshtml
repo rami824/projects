@@ -1,0 +1,91 @@
+﻿@using SimpleMemberShip.Models
+@model Users
+
+@{
+    ViewBag.Title = "Register";
+    List<SelectListItem> roles = new List<SelectListItem>()
+    {
+         //new SelectListItem()
+         //{
+         //    Text ="admin",
+         //    Value ="admin"
+         //},
+         new SelectListItem()
+         {
+             Text ="etudiant",
+             Value ="etudiant"
+         },
+         new SelectListItem()
+         {
+             Text ="recruteur",
+             Value ="recruteur"
+         }
+    };
+    List<SelectListItem> sexe = new List<SelectListItem>()
+    {
+         new SelectListItem()
+         {
+             Text ="Homme",
+             Value ="Homme"
+         },
+         new SelectListItem()
+         {
+             Text ="Femme",
+             Value ="Femme"
+         }
+    };
+}
+<div class="jumbotron">
+    <h2>Ouvrir un compte</h2>
+    <div>
+        @using (@Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+    <table border="0" class="table-condensed">
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+    <label> Nom d'utilisateur: </label>
+    @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+    <label> Mot de Passe: </label>
+    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+    <label> Type de Compte: </label>
+    @Html.DropDownList("role", @roles, "", new { @class = "form-control" })
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+                <label> Votre nom: </label>
+                @Html.TextBoxFor(m => m.Nom, new { @class = "form-control" })
+                <label> Votre prenom: </label>
+                @Html.TextBoxFor(m => m.Prenom, new { @class = "form-control" })
+                <label> Sexe: </label>
+                @Html.DropDownList("sexe", @sexe, "", new { @class = "form-control" })
+            </td>
+        </tr>
+       <tr>
+           <td></td>
+           <td></td>
+           </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td><td></td>
+<td></td>
+            <td>
+                <button class="btn btn-primary">Ouvrir un Compte</button>
+            </td>
+        </tr>
+
+    </table>
+
+        }
+    </div>
+    </div>
+
+
+
+

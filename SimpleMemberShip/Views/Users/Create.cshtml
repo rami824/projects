@@ -1,0 +1,131 @@
+﻿@model SimpleMemberShip.Models.UsersSet
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2><center>Page d'inscription </center> </h2>
+
+@using (Html.BeginForm())
+{
+
+    List<SelectListItem> role = new List<SelectListItem>()
+    {
+
+         new SelectListItem()
+         {
+             Text ="organisateur",
+             Value ="organisateur"
+         },
+         new SelectListItem()
+         {
+             Text ="admin",
+             Value ="admin"
+         },
+
+         new SelectListItem()
+         {
+             Text ="chercheur",
+             Value ="chercheur"
+         }
+    };
+
+
+    List<SelectListItem> sexe = new List<SelectListItem>()
+    {
+
+         new SelectListItem()
+         {
+             Text ="Homme",
+             Value ="Homme"
+         },
+         new SelectListItem()
+         {
+             Text ="Femme",
+             Value ="Femme"
+         }
+
+    };
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Username, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Username)
+                @Html.ValidationMessageFor(model => model.Username)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nom, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nom)
+                @Html.ValidationMessageFor(model => model.Nom)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Prenom, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Prenom)
+                @Html.ValidationMessageFor(model => model.Prenom)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Adresse, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Adresse)
+                @Html.ValidationMessageFor(model => model.Adresse)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tel, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Tel)
+                @Html.ValidationMessageFor(model => model.Tel)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sexe, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.DropDownList("Sexe", @sexe, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Role, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.DropDownList("Role", @role, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Inscription" class="btn btn-primary" />
+            </div>
+        </div>
+    
+}
+
+

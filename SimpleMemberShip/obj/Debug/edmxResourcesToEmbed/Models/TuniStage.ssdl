@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TuniStage.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TuniStageStoreContainer">
+    <EntitySet Name="UsersSet" EntityType="TuniStage.Store.UsersSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StagesSet" EntityType="TuniStage.Store.StagesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EntrepriseSet" EntityType="TuniStage.Store.EntrepriseSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PostulationSet" EntityType="TuniStage.Store.PostulationSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UsersPostulation" EntityType="TuniStage.Store.UsersPostulation" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_UsersPostulation_Users" Association="TuniStage.Store.FK_UsersPostulation_Users">
+      <End Role="Users" EntitySet="UsersSet" />
+      <End Role="UsersPostulation" EntitySet="UsersPostulation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersPostulation_Postulation" Association="TuniStage.Store.FK_UsersPostulation_Postulation">
+      <End Role="Postulation" EntitySet="PostulationSet" />
+      <End Role="UsersPostulation" EntitySet="UsersPostulation" />
+    </AssociationSet>
+    <AssociationSet Name="EntrepriseUsers" Association="TuniStage.Store.EntrepriseUsers">
+      <End Role="Entreprise" EntitySet="EntrepriseSet" />
+      <End Role="Users" EntitySet="UsersSet" />
+    </AssociationSet>
+    <AssociationSet Name="StagesUsers" Association="TuniStage.Store.StagesUsers">
+      <End Role="Stages" EntitySet="StagesSet" />
+      <End Role="Users" EntitySet="UsersSet" />
+    </AssociationSet>
+    <AssociationSet Name="PostulationStages" Association="TuniStage.Store.PostulationStages">
+      <End Role="Postulation" EntitySet="PostulationSet" />
+      <End Role="Stages" EntitySet="StagesSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UsersSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Prenom" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Sexe" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StagesSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Titre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Lieu" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Duree" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Users_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EntrepriseSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Designation" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Lieu" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Specialite" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="NbrEmployee" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Users_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PostulationSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Presentation" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Tel" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Stages_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsersPostulation">
+    <Key>
+      <PropertyRef Name="Users_Id" />
+      <PropertyRef Name="Postulation_Id" />
+    </Key>
+    <Property Name="Users_Id" Type="int" Nullable="false" />
+    <Property Name="Postulation_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="EntrepriseUsers">
+    <End Role="Entreprise" Type="TuniStage.Store.EntrepriseSet" Multiplicity="*" />
+    <End Role="Users" Type="TuniStage.Store.UsersSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Entreprise">
+        <PropertyRef Name="Users_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StagesUsers">
+    <End Role="Stages" Type="TuniStage.Store.StagesSet" Multiplicity="*" />
+    <End Role="Users" Type="TuniStage.Store.UsersSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Stages">
+        <PropertyRef Name="Users_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PostulationStages">
+    <End Role="Postulation" Type="TuniStage.Store.PostulationSet" Multiplicity="*" />
+    <End Role="Stages" Type="TuniStage.Store.StagesSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Stages">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Postulation">
+        <PropertyRef Name="Stages_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersPostulation_Users">
+    <End Role="Users" Type="TuniStage.Store.UsersSet" Multiplicity="1" />
+    <End Role="UsersPostulation" Type="TuniStage.Store.UsersPostulation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UsersPostulation">
+        <PropertyRef Name="Users_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersPostulation_Postulation">
+    <End Role="UsersPostulation" Type="TuniStage.Store.UsersPostulation" Multiplicity="*" />
+    <End Role="Postulation" Type="TuniStage.Store.PostulationSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Postulation">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UsersPostulation">
+        <PropertyRef Name="Postulation_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

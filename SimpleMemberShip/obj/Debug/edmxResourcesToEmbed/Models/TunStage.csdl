@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TunStage" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="TunStageContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="UsersSet" EntityType="TunStage.Users" />
+    <EntitySet Name="EntrepriseSet" EntityType="TunStage.Entreprise" />
+    <EntitySet Name="StagesSet" EntityType="TunStage.Stages" />
+    <AssociationSet Name="UsersEntreprise" Association="TunStage.UsersEntreprise">
+      <End Role="Users" EntitySet="UsersSet" />
+      <End Role="Entreprise" EntitySet="EntrepriseSet" />
+    </AssociationSet>
+    <AssociationSet Name="UsersStages" Association="TunStage.UsersStages">
+      <End Role="Users" EntitySet="UsersSet" />
+      <End Role="Stages" EntitySet="StagesSet" />
+    </AssociationSet>
+    <AssociationSet Name="EntrepriseStages" Association="TunStage.EntrepriseStages">
+      <End Role="Entreprise" EntitySet="EntrepriseSet" />
+      <End Role="Stages" EntitySet="StagesSet" />
+    </AssociationSet>
+    <EntitySet Name="PostulationSet" EntityType="TunStage.PostulationSet" />
+    <AssociationSet Name="FK_StagesPostulation" Association="TunStage.FK_StagesPostulation">
+      <End Role="Stages" EntitySet="StagesSet" />
+      <End Role="PostulationSet" EntitySet="PostulationSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersPostulation" Association="TunStage.FK_UsersPostulation">
+      <End Role="Users" EntitySet="UsersSet" />
+      <End Role="PostulationSet" EntitySet="PostulationSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Nom" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Prenom" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Sexe" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Entreprise" Relationship="TunStage.UsersEntreprise" FromRole="Users" ToRole="Entreprise" />
+    <NavigationProperty Name="Stages" Relationship="TunStage.UsersStages" FromRole="Users" ToRole="Stages" />
+    <Property Name="Role" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="PostulationSet" Relationship="TunStage.FK_UsersPostulation" FromRole="Users" ToRole="PostulationSet" />
+  </EntityType>
+  <EntityType Name="Entreprise">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Designation" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Specialite" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Adresse" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Tel" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Users" Relationship="TunStage.UsersEntreprise" FromRole="Entreprise" ToRole="Users" />
+    <Property Name="UsersId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Stages" Relationship="TunStage.EntrepriseStages" FromRole="Entreprise" ToRole="Stages" />
+  </EntityType>
+  <EntityType Name="Stages">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Titre" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Lieu" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Duree" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Users" Relationship="TunStage.UsersStages" FromRole="Stages" ToRole="Users" />
+    <Property Name="UsersId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Entreprise" Relationship="TunStage.EntrepriseStages" FromRole="Stages" ToRole="Entreprise" />
+    <Property Name="EntrepriseId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="PostulationSet" Relationship="TunStage.FK_StagesPostulation" FromRole="Stages" ToRole="PostulationSet" />
+  </EntityType>
+  <Association Name="UsersEntreprise">
+    <End Type="TunStage.Users" Role="Users" Multiplicity="1" />
+    <End Type="TunStage.Entreprise" Role="Entreprise" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Entreprise">
+        <PropertyRef Name="UsersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsersStages">
+    <End Type="TunStage.Users" Role="Users" Multiplicity="1" />
+    <End Type="TunStage.Stages" Role="Stages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Stages">
+        <PropertyRef Name="UsersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EntrepriseStages">
+    <End Type="TunStage.Entreprise" Role="Entreprise" Multiplicity="1" />
+    <End Type="TunStage.Stages" Role="Stages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Entreprise">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Stages">
+        <PropertyRef Name="EntrepriseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PostulationSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Presentation" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Telephone" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UsersId" Type="Int32" Nullable="false" />
+    <Property Name="StagesId" Type="Int32" Nullable="false" />
+    <Property Name="etat" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Adresse" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Niveau" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Specialite" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="StagesSet" Relationship="TunStage.FK_StagesPostulation" FromRole="PostulationSet" ToRole="Stages" />
+    <NavigationProperty Name="UsersSet" Relationship="TunStage.FK_UsersPostulation" FromRole="PostulationSet" ToRole="Users" />
+  </EntityType>
+  <Association Name="FK_StagesPostulation">
+    <End Type="TunStage.Stages" Role="Stages" Multiplicity="1" />
+    <End Type="TunStage.PostulationSet" Role="PostulationSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stages">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PostulationSet">
+        <PropertyRef Name="StagesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersPostulation">
+    <End Type="TunStage.Users" Role="Users" Multiplicity="1" />
+    <End Type="TunStage.PostulationSet" Role="PostulationSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PostulationSet">
+        <PropertyRef Name="UsersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
